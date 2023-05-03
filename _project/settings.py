@@ -52,7 +52,7 @@ MY_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "drf-spectacular",
+    "drf_spectacular",
     "rest_framework"
 ]
 
