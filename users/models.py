@@ -9,3 +9,6 @@ class User(AbstractUser):
     birthdate = models.DateField(null=True)
     loan_status = models.BooleanField(default=True)
     student = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.username
