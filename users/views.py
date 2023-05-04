@@ -1,17 +1,21 @@
 from .models import User
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .serializers import UserSerializer
-from .permissions import IsAccountEmployee
+from .permissions import IsAccountEmployee, IsAdminOrCreate
 from rest_framework import generics
+from rest_framework.exceptions import PermissionDenied
 
 
 class UserView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminUser]
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+        return super().get(request, *args, **kwargs)
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
