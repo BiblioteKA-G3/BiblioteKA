@@ -4,7 +4,7 @@ from .models import Book
 
 
 class BookSerializer(serializers.ModelSerializer):
-    title = serializers.EmailField(
+    title = serializers.CharField(
         max_length=200,
         validators=[UniqueValidator(queryset=Book.objects.all())],
     )
@@ -16,3 +16,11 @@ class BookSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict) -> Book:
         return Book.objects.create(**validated_data)
+
+    def update(self, instance: Book, validated_data: dict) -> Book:
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.save()
+
+        return instance
