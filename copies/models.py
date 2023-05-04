@@ -1,3 +1,11 @@
 from django.db import models
 
-# Create your models here.
+
+class Copy(models.Model):
+    copy_count = models.IntegerField()
+    book = models.ForeignKey(
+        "books.Book", on_delete=models.CASCADE, related_name="books"
+    )
+
+    def __str__(self) -> str:
+        return f"{self.book} - copy {self.copy_count}"
