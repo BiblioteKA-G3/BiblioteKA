@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class Books(models.Model):
+class Book(models.Model):
     class Meta:
         ordering = ["id"]
 
