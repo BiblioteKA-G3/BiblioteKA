@@ -51,10 +51,7 @@ MY_APPS = [
     "users",
 ]
 
-THIRD_PARTY_APPS = [
-    "drf_spectacular",
-    "rest_framework"
-]
+THIRD_PARTY_APPS = ["drf_spectacular", "rest_framework"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -117,9 +114,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
     db_from_env = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=500,
-        ssl_require=True
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True
     )
 
     DATABASES["default"].update(db_from_env)
