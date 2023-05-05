@@ -1,17 +1,15 @@
-from django.shortcuts import render
 from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
-from users.permissions import IsAccountEmployee
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from .models import Book
-from .serializers import BookSerializer
 
+from users.permissions import IsAccountEmployee
 
-# Create your views here.
+from books.models import Book
+from books.serializers import BookSerializer
 
 
 class BookView(ListAPIView):

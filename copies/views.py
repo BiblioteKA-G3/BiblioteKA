@@ -10,11 +10,11 @@ from rest_framework.permissions import (
 )
 
 from books.models import Book
-from copies.serializers import CopySerializer
+
 from copies.models import Copy
+from copies.serializers import CopySerializer
 
 
-# Create your views here.
 class CreateCopyView(CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]

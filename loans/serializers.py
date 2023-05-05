@@ -22,5 +22,7 @@ class LoanSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> Loan:
         loan_date = validated_data["loan_date"]
         return_date = self.get_return_date(loan_date)
+
         validated_data["return_date"] = return_date
+
         return Loan.objects.create(**validated_data)
