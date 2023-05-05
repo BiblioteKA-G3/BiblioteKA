@@ -5,9 +5,7 @@ class Copy(models.Model):
     copy_count = models.IntegerField()
 
     book = models.OneToOneField(
-        "books.Book",
-        on_delete=models.CASCADE,
-        related_name="copies"
+        "books.Book", on_delete=models.CASCADE, related_name="copies"
     )
 
     def __str__(self) -> str:
