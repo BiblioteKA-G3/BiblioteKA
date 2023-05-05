@@ -10,5 +10,17 @@ class User(AbstractUser):
     loan_status = models.BooleanField(default=True)
     student = models.BooleanField(default=True)
 
+    follows_books = models.ManyToManyField(
+        "books.Book",
+        through="follows.Follow",
+        related_name="user_followed"
+    )
+
+    """
+        Adicionar relação atráves de Usuários com Copias.
+            related through=copies.
+
+    """
+
     def __str__(self):
         return self.username

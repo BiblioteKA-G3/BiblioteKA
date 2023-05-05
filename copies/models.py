@@ -4,7 +4,7 @@ from django.db import models
 class Copy(models.Model):
     copy_count = models.IntegerField()
 
-    book = models.OneToOneField(
+    book = models.ForeignKey(
         "books.Book", on_delete=models.CASCADE, related_name="copies"
     )
 
