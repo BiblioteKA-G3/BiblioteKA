@@ -11,5 +11,5 @@ class Book(models.Model):
     publisher = models.CharField(max_length=155)
     release_date = models.IntegerField()
 
-    def __str__(self):
-        return self.titulo
+    # def __str__(self):
+    #     return self.titulo
