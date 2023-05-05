@@ -1,7 +1,9 @@
-from rest_framework import serializers
 from copies.models import Copy
+
 from books.models import Book
 from books.serializers import BookSerializer
+
+from rest_framework import serializers
 
 
 class CopySerializer(serializers.ModelSerializer):
@@ -20,4 +22,5 @@ class CopySerializer(serializers.ModelSerializer):
     def get_book(self, obj: Copy) -> dict:
         book = Book.objects.get(id=obj.book_id)
         serializer = BookSerializer(book)
+
         return serializer.data

@@ -1,7 +1,7 @@
+from users.models import User
 from rest_framework import serializers
+
 from rest_framework.validators import UniqueValidator
-from .models import User
-from django.contrib.auth import get_user_model
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,10 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
             "cpf",
             "birthdate",
             "loan_status",
-            "student",
-            "is_superuser",
+            "student"
         ]
-        # read_only_fields = ["id", "is_superuser"]
 
         extra_kwargs = {
             "password": {"write_only": True},
@@ -55,5 +53,4 @@ class UserSerializer(serializers.ModelSerializer):
                 setattr(instance, key, value)
 
         instance.save()
-
         return instance

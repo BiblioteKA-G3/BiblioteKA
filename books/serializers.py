@@ -1,6 +1,7 @@
+from books.models import Book
+
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from .models import Book
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -22,5 +23,4 @@ class BookSerializer(serializers.ModelSerializer):
             setattr(instance, key, value)
 
         instance.save()
-
         return instance

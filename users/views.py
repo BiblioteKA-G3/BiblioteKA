@@ -1,9 +1,10 @@
-from .models import User
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from .serializers import UserSerializer
-from .permissions import IsAccountEmployee, IsAdminOrCreate
 from rest_framework import generics
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import PermissionDenied
+
+from users.models import User
+from users.serializers import UserSerializer
+from users.permissions import IsAccountEmployee
 
 
 class UserView(generics.ListCreateAPIView):
