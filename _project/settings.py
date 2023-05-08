@@ -148,18 +148,17 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
 
-# SPECTACULAR_SETTINGS = {
-#     "TITLE": "BandKamp",
-#     "DESCRIPTION": "Api que simula registros de álbuns e canções de bandas autônomas, para divulgação de seus trabalhos musicais.",
-#     "VERSION": "1.0.0",
-#     "SERVE_INCLUDE_SCHEMA": False,
-#     # OTHER SETTINGS
-# }
+SPECTACULAR_SETTINGS = {
+    "TITLE": "BiblioteKA",
+    "DESCRIPTION": "Api que permite o cadastro e autenticação de usuários num sistema de gerenciamento de biblioteca.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 5,
-    # "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # Internationalization
