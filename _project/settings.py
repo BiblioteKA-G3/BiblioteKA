@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 
@@ -26,12 +25,11 @@ ALLOWED_HOSTS = []
 
 RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS +=[RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
+    ALLOWED_HOSTS += [RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    # (...)
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -40,14 +38,7 @@ MIDDLEWARE = [
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# RAILWAY_STATIC_URL = os.getenv("RAILWAY_STATIC_URL")
-
-# if RAILWAY_STATIC_URL:
-#     ALLOWED_HOSTS += [RAILWAY_STATIC_URL, "0.0.0.0"]
-
-
 # Application definition
-
 MY_APPS = [
     "books",
     "copies",
@@ -99,7 +90,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "_project.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
