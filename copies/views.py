@@ -1,5 +1,6 @@
 from rest_framework.generics import (
-    CreateAPIView
+    CreateAPIView,
+    ListAPIView
 )
 from rest_framework.exceptions import ValidationError
 
@@ -28,3 +29,11 @@ class CreateCopyView(CreateAPIView):
             raise ValidationError({"Error Message": "Book Already exists"})
 
         serializer.save(book=book)
+
+
+class ListCopies(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    queryset = Copy.objects.all()
+    serializer_class = CopySerializer
