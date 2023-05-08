@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 
@@ -20,29 +19,26 @@ import dj_database_url
 
 dotenv.load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS += [RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-# RAILWAY_STATIC_URL = os.getenv("RAILWAY_STATIC_URL")
-
-# if RAILWAY_STATIC_URL:
-#     ALLOWED_HOSTS += [RAILWAY_STATIC_URL, "0.0.0.0"]
-
-
 # Application definition
-
 MY_APPS = [
     "books",
     "copies",
@@ -51,10 +47,7 @@ MY_APPS = [
     "users",
 ]
 
-THIRD_PARTY_APPS = [
-    "drf-spectacular",
-    "rest_framework"
-]
+THIRD_PARTY_APPS = ["drf_spectacular", "rest_framework"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -98,18 +91,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "_project.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "USER": os.getenv("POSTGRES_USERNAME"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "NAME": os.getenv("POSTGRES_DB_NAME"),
-        "HOST": os.getenv("POSTGRES_DB_HOST"),
-        "PORT": os.getenv("POSTGRES_DB_PORT"),
+        "USER": os.getenv("DB_POSTGRES_USERNAME"),
+        "PASSWORD": os.getenv("DB_POSTGRES_PASSWORD"),
+        "NAME": os.getenv("DB_POSTGRES_DB_NAME"),
+        "HOST": os.getenv("DB_POSTGRES_DB_HOST"),
+        "PORT": os.getenv("DB_POSTGRES_DB_PORT"),
     }
 }
 
@@ -117,9 +109,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
     db_from_env = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=500,
-        ssl_require=True
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True
     )
 
     DATABASES["default"].update(db_from_env)
@@ -153,19 +143,18 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
 
-# SPECTACULAR_SETTINGS = {
-#     "TITLE": "BandKamp",
-#     "DESCRIPTION": "Api que simula registros de álbuns e canções de bandas autônomas, para divulgação de seus trabalhos musicais.",
-#     "VERSION": "1.0.0",
-#     "SERVE_INCLUDE_SCHEMA": False,
-#     # OTHER SETTINGS
-# }
+SPECTACULAR_SETTINGS = {
+    "TITLE": "BiblioteKA",
+    "DESCRIPTION": "Api que permite o cadastro e autenticação de usuários num sistema de gerenciamento de biblioteca.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-#     "PAGE_SIZE": 2,
-#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 5,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -190,3 +179,11 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
