@@ -12,4 +12,4 @@ class Book(models.Model):
     release_date = models.IntegerField()
 
     # def __str__(self):
-    #     return self.titulo
+    #     return self.title

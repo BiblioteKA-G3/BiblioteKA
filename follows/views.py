@@ -1,12 +1,12 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView
+  CreateAPIView,
+  DestroyAPIView
 )
 from rest_framework.views import (
-    status,
-    Response
+  status,
+  Response
 )
 from rest_framework.exceptions import ValidationError
 
@@ -14,12 +14,12 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 
-from follows.models import Follow
-from follows.serializers import FollowSerializer
-
 from books.models import Book
 from users.models import User
 from copies.models import Copy
+from follows.models import Follow
+
+from follows.serializers import FollowSerializer
 
 
 class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
@@ -47,8 +47,7 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
         user.save()
 
         return Response(
-            {"Message": f"Now you're following: {book.title}"},
-            status.HTTP_201_CREATED
+            {"Message": f"Now you're following: {book.title}"}, status.HTTP_201_CREATED
         )
 
     def delete(self, request, *args, **kwargs):
@@ -57,7 +56,7 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
 
         relation = Follow.objects.filter(user_id=user, book_id=book)
         if not relation:
-            raise ValidationError({"Error Message": "Relation does not exists"})
+            raise ValidationError({"Error Message": "Follow does not exists"})
 
         relation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

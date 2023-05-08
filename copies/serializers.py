@@ -7,9 +7,7 @@ from rest_framework import serializers
 
 
 class CopySerializer(serializers.ModelSerializer):
-    book = serializers.SerializerMethodField(
-        method_name="get_book"
-    )
+    book = serializers.SerializerMethodField(method_name="get_book")
 
     class Meta:
         model = Copy
