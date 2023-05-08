@@ -1,5 +1,8 @@
 from django.urls import path
-from . import views
+from loans.views import LoanView, LoanDetailView
 
 
-urlpatterns = [path("loans/username/<int:pk>/", views.LoanView.as_view())]
+urlpatterns = [
+    path("loans/", LoanView.as_view()),
+    path("loans/<str:username>/<int:pk>/", LoanDetailView.as_view()),
+]

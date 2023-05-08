@@ -156,11 +156,11 @@ SIMPLE_JWT = {
 #     # OTHER SETTINGS
 # }
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-#     "PAGE_SIZE": 2,
-#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 5,
+    # "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
