@@ -47,7 +47,8 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
         user.save()
 
         return Response(
-            {"Message": f"Now you're following: {book.title}"}, status.HTTP_201_CREATED
+            {"Message": f"Now you're following: {book.title}"},
+            status.HTTP_201_CREATED
         )
 
     def delete(self, request, *args, **kwargs):

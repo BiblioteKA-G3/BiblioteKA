@@ -1,4 +1,7 @@
-from rest_framework import generics
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView
+)
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import PermissionDenied
 
@@ -7,7 +10,7 @@ from users.serializers import UserSerializer
 from users.permissions import IsAccountEmployee
 
 
-class UserView(generics.ListCreateAPIView):
+class UserView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     queryset = User.objects.all()
@@ -19,7 +22,7 @@ class UserView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAccountEmployee]
 

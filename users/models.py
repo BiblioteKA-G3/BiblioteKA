@@ -12,7 +12,9 @@ class User(AbstractUser):
     blocked_date = models.DateField(null=True)
 
     follows_books = models.ManyToManyField(
-        "books.Book", through="follows.Follow", related_name="user_followed"
+        "books.Book",
+        through="follows.Follow",
+        related_name="user_followed"
     )
 
     def __str__(self):

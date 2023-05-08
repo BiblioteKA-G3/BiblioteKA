@@ -12,7 +12,14 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ["id", "title", "author", "pages", "publisher", "release_date"]
+        fields = [
+            "id",
+            "title",
+            "author",
+            "pages",
+            "publisher",
+            "release_date"
+        ]
         read_only_fields = ["id"]
 
     def create(self, validated_data: dict) -> Book:

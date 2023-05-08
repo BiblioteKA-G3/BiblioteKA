@@ -19,7 +19,13 @@ class LoanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Loan
-        fields = ["id", "loan_date", "return_date", "copy", "user"]
+        fields = [
+            "id",
+            "loan_date",
+            "return_date",
+            "copy",
+            "user"
+        ]
         read_only_fields = [
             "id",
             "loan_date",
@@ -41,15 +47,12 @@ class LoanSerializer(serializers.ModelSerializer):
         return_date = self.get_return_date(loan_date)
 
         validated_data["return_date"] = return_date
-
-        # import ipdb
-
-        # ipdb.set_trace()
-
         user = validated_data["user"]
+
         if validated_data["user"].loans.filter(return_date__lt=date.today()):
             user.loan_status = False
             user.blocked_date = date.today() + timedelta(days=3)
+
             user.save()
             raise ValidationError({"Error Message": "User cannot borrow a book"})
 

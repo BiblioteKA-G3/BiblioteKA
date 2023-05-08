@@ -1,7 +1,7 @@
-from users.models import User
-
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+
+from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,16 +25,22 @@ class UserSerializer(serializers.ModelSerializer):
                 "validators": [
                     UniqueValidator(
                         queryset=User.objects.all(),
-                        message="A user with that username already exists.",
+                        message="user with this username already exists.",
                     )
                 ]
             },
-            "email": {"validators": [UniqueValidator(queryset=User.objects.all())]},
+            "email": {
+                "validators": [
+                    UniqueValidator(
+                        queryset=User.objects.all()
+                    )
+                ]
+            },
             "cpf": {
                 "validators": [
                     UniqueValidator(
                         queryset=User.objects.all(),
-                        message="A user with that cpf already exists.",
+                        message="user with this cpf already exists.",
                     )
                 ]
             },
@@ -55,5 +61,3 @@ class UserSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-    
-    

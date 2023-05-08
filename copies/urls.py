@@ -1,5 +1,8 @@
 from django.urls import path
-from copies.views import CreateCopyView, ListCopies
+from copies.views import (
+    CreateCopyView,
+    ListCopies
+)
 
 
 urlpatterns = [

@@ -1,5 +1,9 @@
 from django.urls import path
-from loans.views import LoanView, LoanDetailView, LoanHistoryStudentView
+from loans.views import (
+    LoanView,
+    LoanDetailView,
+    LoanHistoryStudentView
+)
 
 
 urlpatterns = [

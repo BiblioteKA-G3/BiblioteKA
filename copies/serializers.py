@@ -1,9 +1,9 @@
-from copies.models import Copy
-
-from books.models import Book
-from books.serializers import BookSerializer
-
 from rest_framework import serializers
+
+from copies.models import Copy
+from books.models import Book
+
+from books.serializers import BookSerializer
 
 
 class CopySerializer(serializers.ModelSerializer):
@@ -11,7 +11,11 @@ class CopySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Copy
-        fields = ["id", "copy_count", "book"]
+        fields = [
+            "id",
+            "copy_count",
+            "book"
+        ]
         read_only_fields = ["id", "book"]
 
     def create(self, validated_data: dict) -> Copy:
