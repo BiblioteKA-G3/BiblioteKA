@@ -19,6 +19,8 @@ from loans.serializers import LoanSerializer
 
 from users.models import User
 
+from users.serializers import UserSerializer
+
 from books.models import Book
 
 from copies.models import Copy
@@ -37,12 +39,19 @@ class LoanView(ListAPIView):
     serializer_class = LoanSerializer
 
 
-# class LoanHistoryStudentView(RetrieveAPIView):
-#     authentication_classes = [JWTAuthentication]
-#     permission_classes = [IsAuthenticated]
+class LoanHistoryStudentView(RetrieveAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
-#     queryset = Loan.objects.all()
-#     serializer_class = LoanSerializer
+    serializer_class = LoanSerializer
+
+    lookup_url_kwarg = "pk"
+
+    def get_queryset(self):
+        user = self.kwargs.get(self.lookup_url_kwarg)
+        loans = Loan.objects.filter(user=user)
+
+        return loans
 
 
 class LoanDetailView(CreateAPIView, DestroyAPIView):
@@ -55,10 +64,6 @@ class LoanDetailView(CreateAPIView, DestroyAPIView):
     def post(self, request: Request, *args, **kwargs):
         user = get_object_or_404(User, username=kwargs.get("username"))
         copy = get_object_or_404(Copy, id=kwargs.get("pk"))
-
-        # import ipdb
-
-        # ipdb.set_trace()
 
         if copy.copy_count == 0:
             raise ValidationError({"Error Message": "Not copy"})
