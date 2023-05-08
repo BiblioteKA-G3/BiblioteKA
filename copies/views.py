@@ -1,14 +1,7 @@
-from rest_framework.generics import (
-    CreateAPIView,
-    ListAPIView
-)
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.exceptions import ValidationError
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAdminUser
-)
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from books.models import Book
 

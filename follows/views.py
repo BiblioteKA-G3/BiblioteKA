@@ -1,13 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView
-)
-from rest_framework.views import (
-    status,
-    Response
-)
+from rest_framework.generics import CreateAPIView, DestroyAPIView
+from rest_framework.views import status, Response
 from rest_framework.exceptions import ValidationError
 
 from django.conf import settings
@@ -18,7 +12,9 @@ from follows.models import Follow
 from follows.serializers import FollowSerializer
 
 from books.models import Book
+
 from users.models import User
+
 from copies.models import Copy
 
 
@@ -30,7 +26,6 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
     serializer_class = FollowSerializer
 
     def post(self, request, *args, **kwargs):
-
         book = get_object_or_404(Book, id=kwargs.get("pk"))
         user = request.user
 
@@ -41,8 +36,8 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
                 "user__email", flat=True
             )
 
-            subject = f"{book.title} está indisponivel agora"
-            message = f"O livro {book.title} de {book.author} não está disponível."
+            subject = f"{book.title} it is unavailable now"
+            message = f"The Book {book.title} of {book.author} Not Available."
             send_mail(
                 subject=subject,
                 message=message,
@@ -51,16 +46,14 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
                 fail_silently=False,
             )
             return Response(
-                {"Message": "This book has no copies"},
-                status.HTTP_400_BAD_REQUEST
+                {"Message": "This book has no copies"}, status.HTTP_400_BAD_REQUEST
             )
 
         user.follows_books.add(book)
         user.save()
 
         return Response(
-            {"Message": f"Now you're following: {book.title}"},
-            status.HTTP_201_CREATED
+            {"Message": f"Now you're following: {book.title}"}, status.HTTP_201_CREATED
         )
 
     def delete(self, request, *args, **kwargs):
@@ -69,7 +62,7 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
 
         relation = Follow.objects.filter(user_id=user, book_id=book)
         if not relation:
-            raise ValidationError({"Error Message": "Relation does not exists"})
+            raise ValidationError({"Error Message": "Follow does not exists"})
 
         relation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

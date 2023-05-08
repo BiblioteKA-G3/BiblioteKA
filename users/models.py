@@ -9,18 +9,11 @@ class User(AbstractUser):
     birthdate = models.DateField(null=True)
     loan_status = models.BooleanField(default=True)
     student = models.BooleanField(default=True)
+    blocked_date = models.DateField(null=True)
 
     follows_books = models.ManyToManyField(
-        "books.Book",
-        through="follows.Follow",
-        related_name="user_followed"
+        "books.Book", through="follows.Follow", related_name="user_followed"
     )
-
-    """
-        Adicionar relação atráves de Usuários com Copias.
-            related through=copies.
-
-    """
 
     def __str__(self):
         return self.username
