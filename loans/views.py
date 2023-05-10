@@ -115,8 +115,8 @@ class LoanDetailView(CreateAPIView, DestroyAPIView):
         copy.save()
 
         send_mail(
-            subject=f"{book.title} ja disponivel",
-            message=f"The Book {book.title} of {book.author} Available.",
+            subject=f"{book.title} is available.",
+            message=f"The Book {book.title} of {book.author} is available to loan.",
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=followers,
             fail_silently=False,

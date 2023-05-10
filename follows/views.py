@@ -36,8 +36,8 @@ class FollowsCreateDestroyView(CreateAPIView, DestroyAPIView):
 
         if copy.copy_count == 0:
             send_mail(
-                subject=f"{book.title} está indisponivel agora",
-                message=f"O livro {book.title} de {book.author} não está disponível.",
+                subject=f"{book.title} not available",
+                message=f"The book {book.title} by {book.author}, has no copies at the moment.",
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[user.email],
                 fail_silently=False,
