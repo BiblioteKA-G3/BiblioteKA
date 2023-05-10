@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from follows.views import FollowsCreateDestroyView
 
 
 urlpatterns = [
-    path("follows/<int:pk>/", views.FollowsCreateDestroyView.as_view())
+    path("follows/<int:pk>/", FollowsCreateDestroyView.as_view())
 ]

@@ -1,4 +1,7 @@
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAdminUser
+)
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import (
     Request,
@@ -6,24 +9,23 @@ from rest_framework.views import (
     status
 )
 from rest_framework.generics import (
-    DestroyAPIView,
-    CreateAPIView,
     ListAPIView,
-    RetrieveAPIView,
+    CreateAPIView,
+    DestroyAPIView,
 )
 from rest_framework.exceptions import ValidationError
 
-from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
 
 from loans.models import Loan
-from loans.serializers import LoanSerializer
-
 from users.models import User
 from books.models import Book
 from copies.models import Copy
 from follows.models import Follow
+
+from loans.serializers import LoanSerializer
 
 import datetime
 
@@ -36,17 +38,16 @@ class LoanView(ListAPIView):
     serializer_class = LoanSerializer
 
 
-class LoanHistoryStudentView(RetrieveAPIView):
+class LoanHistoryStudentView(ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     serializer_class = LoanSerializer
 
-    lookup_url_kwarg = "pk"
-
     def get_queryset(self):
-        user = self.kwargs.get(self.lookup_url_kwarg)
-        loans = Loan.objects.filter(user=user)
+        loans = Loan.objects.filter(
+            user=self.kwargs.get("pk")
+        )
 
         return loans
 
@@ -64,14 +65,14 @@ class LoanDetailView(CreateAPIView, DestroyAPIView):
 
         if copy.copy_count == 0:
             raise ValidationError(
-                {"Error Message": "Not copy"}
+                {"Error Message": "This book has no copies available"}
             )
 
         blocked_date = user.blocked_date
         if blocked_date is not None:
             if blocked_date > datetime.date.today():
                 raise ValidationError(
-                    {"Error Message": "You are still blocked"}
+                    {"Error Message": "User still blocked"}
                 )
 
         copy.copy_count = copy.copy_count - 1
@@ -80,7 +81,7 @@ class LoanDetailView(CreateAPIView, DestroyAPIView):
         relation = Loan.objects.filter(user_id=user, copy_id=copy)
         if relation:
             raise ValidationError(
-                {"Error Message": "Loan already exists"}
+                {"Error Message": "This Loan already exists."}
             )
 
         loan_data = {
@@ -103,10 +104,11 @@ class LoanDetailView(CreateAPIView, DestroyAPIView):
             "user__email", flat=True
         )
 
-        relation = Loan.objects.filter(user_id=user, copy_id=copy)
+        relation = Loan.objects.filter(user_id=user.id, copy_id=copy.id)
+
         if not relation:
             raise ValidationError(
-                {"Error Message": "Loan does not exists"}
+                {"Error Message": "Loan doesn't exists."}
             )
 
         copy.copy_count = copy.copy_count + 1
