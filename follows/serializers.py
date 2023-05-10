@@ -1,11 +1,10 @@
 from rest_framework import serializers
 
+from users.models import User
+from books.models import Book
 from follows.models import Follow
 
-from books.models import Book
 from books.serializers import BookSerializer
-
-from users.models import User
 from users.serializers import UserSerializer
 
 

@@ -1,14 +1,16 @@
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 
-from datetime import timedelta, date
-
-from loans.models import Loan
+from datetime import (
+    date,
+    timedelta
+)
 
 from users.models import User
-from users.serializers import UserSerializer
-
 from copies.models import Copy
+from loans.models import Loan
+
+from users.serializers import UserSerializer
 from copies.serializers import CopySerializer
 
 

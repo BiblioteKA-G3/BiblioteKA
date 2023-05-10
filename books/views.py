@@ -6,10 +6,10 @@ from rest_framework.generics import (
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from users.permissions import IsAccountEmployee
-
 from books.models import Book
 from books.serializers import BookSerializer
+
+from users.permissions import IsAccountEmployee
 
 
 class BookView(ListAPIView):
